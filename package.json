@@ -1,0 +1,25 @@
+{
+  "name": "glow-and-flow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Full-stack monorepo webapp: Next.js + Prisma/Postgres, self-hosted on Linux, exposed via Cloudflare Tunnel.",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:generate": "pnpm --filter @glow/database generate",
+    "db:migrate": "pnpm --filter @glow/database migrate",
+    "db:studio": "pnpm --filter @glow/database studio",
+    "db:push": "pnpm --filter @glow/database push",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

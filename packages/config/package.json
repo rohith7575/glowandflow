@@ -1,0 +1,11 @@
+{
+  "name": "@glow/config",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "files": ["eslint", "typescript"],
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.7.0"
+  }
+}

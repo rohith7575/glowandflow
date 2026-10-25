@@ -1,0 +1,18 @@
+[Unit]
+Description=Glow & Flow web app (Next.js)
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=boss
+WorkingDirectory=/home/boss/Desktop/projects/glow and flow
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+EnvironmentFile=/home/boss/Desktop/projects/glow and flow/.env.production
+ExecStart=/home/boss/.nvm/versions/node/v24.16.0/bin/node apps/web/.next/standalone/apps/web/server.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
