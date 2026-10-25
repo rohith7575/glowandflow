@@ -23,6 +23,12 @@ pnpm build
 
 echo "==> Copying static assets into standalone output"
 mkdir -p "$ROOT/apps/web/.next/standalone/apps/web/.next"
+# Wait for the build to flush static assets
+for i in $(seq 1 20); do
+  [ -d "$ROOT/apps/web/.next/static" ] && break
+  sleep 0.5
+done
+rm -rf "$ROOT/apps/web/.next/standalone/apps/web/.next/static"
 cp -r "$ROOT/apps/web/.next/static" "$ROOT/apps/web/.next/standalone/apps/web/.next/static"
 if [ -d "$ROOT/apps/web/public" ]; then
   cp -r "$ROOT/apps/web/public" "$ROOT/apps/web/.next/standalone/apps/web/public"
