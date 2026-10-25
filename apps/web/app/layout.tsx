@@ -18,11 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/" className="hover:text-gray-900">
                 Home
               </a>
-              <a href="/users" className="hover:text-gray-900">
-                Users
+              <a href="/login" className="hover:text-gray-900">
+                Login
               </a>
-              <a href="/api/health" className="hover:text-gray-900">
-                Health
+              <a href="/signup" className="hover:text-gray-900">
+                Sign up
               </a>
             </nav>
           </div>

@@ -4,6 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 export DATABASE_URL="file:$ROOT/data/app.db"
+export JWT_SECRET="${JWT_SECRET:-change-this-to-a-long-random-secret-in-production}"
 mkdir -p "$ROOT/data"
 
 cd "$ROOT"

@@ -8,23 +8,59 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts     Post[]
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String?
+  phone        String?
+  password     String
+  token        String?
+  lastLoggedIn DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
-model Post {
+model Otp {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  email     String
+  code      String
+  purpose   String   @default("signup")
+  payload   Json?
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email, purpose])
+}
+
+model BillInfo {
+  id          String   @id @default(cuid())
+  name        String
+  companyName String?
+  phone       Json
+  address     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  name      String
+  rate      Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
 
-  @@index([authorId])
+model Party {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bill {
+  id        String   @id @default(cuid())
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,0 +1,53 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function OverviewPage() {
+  const [counts, setCounts] = useState({ services: 0, parties: 0, billinfo: 0, bills: 0 });
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/services").then((r) => r.json()),
+      fetch("/api/parties").then((r) => r.json()),
+      fetch("/api/billinfo").then((r) => r.json()),
+      fetch("/api/bills").then((r) => r.json()),
+    ]).then(([s, p, b, bl]) => {
+      setCounts({
+        services: s.data?.length ?? 0,
+        parties: p.data?.length ?? 0,
+        billinfo: b.data?.length ?? 0,
+        bills: bl.data?.length ?? 0,
+      });
+    });
+  }, []);
+
+  const cards = [
+    { label: "Services", value: counts.services, href: "/dashboard/services" },
+    { label: "Parties", value: counts.parties, href: "/dashboard/parties" },
+    { label: "Bill Info", value: counts.billinfo, href: "/dashboard/billinfo" },
+    { label: "Bills", value: counts.bills, href: "/dashboard/bills" },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Dashboard</h1>
+        <p className="mt-1 text-sm text-gray-500">Manage your services, parties, bill info and bills.</p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {cards.map((c) => (
+          <a
+            key={c.label}
+            href={c.href}
+            className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+          >
+            <p className="text-xs font-medium uppercase tracking-wider text-gray-400">{c.label}</p>
+            <p className="mt-3 text-4xl font-semibold tracking-tight text-gray-900">{c.value}</p>
+            <p className="mt-2 text-sm text-gray-500 group-hover:text-gray-900">View →</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
