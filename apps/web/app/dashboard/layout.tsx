@@ -37,13 +37,32 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!ready) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#0a0c10]">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/15 border-t-gray-900" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/15 border-t-amber-400" />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#0a0c10]">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0a0c10]/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-cyan-400 text-xs font-bold text-black">
+              G
+            </span>
+            <span className="font-display text-lg tracking-tight text-white">Glow &amp; Flow</span>
+          </Link>
+          <div className="flex items-center gap-3">
+            <span className="hidden text-xs text-gray-400 sm:block">{user?.email}</span>
+            <button
+              onClick={logout}
+              className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-300"
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+      </header>
       <div className="mx-auto flex max-w-7xl gap-6 px-6 py-6">
         <aside className="hidden w-60 shrink-0 md:block">
           <div className="sticky top-6 rounded-2xl border border-white/10 bg-[#12151c] p-4 shadow-sm">
@@ -70,12 +89,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 );
               })}
             </nav>
-            <button
-              onClick={logout}
-              className="mt-4 w-full rounded-lg border border-white/10 px-3 py-2 text-sm font-medium text-gray-400 transition hover:bg-white/10 hover:text-white"
-            >
-              Log out
-            </button>
           </div>
         </aside>
 
