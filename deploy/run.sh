@@ -21,5 +21,12 @@ pnpm db:push
 echo "==> Building monorepo"
 pnpm build
 
+echo "==> Copying static assets into standalone output"
+mkdir -p "$ROOT/apps/web/.next/standalone/apps/web/.next"
+cp -r "$ROOT/apps/web/.next/static" "$ROOT/apps/web/.next/standalone/apps/web/.next/static"
+if [ -d "$ROOT/apps/web/public" ]; then
+  cp -r "$ROOT/apps/web/public" "$ROOT/apps/web/.next/standalone/apps/web/public"
+fi
+
 echo "==> Starting production server on http://localhost:3000"
 PORT=3000 node "$ROOT/apps/web/.next/standalone/apps/web/server.js"
