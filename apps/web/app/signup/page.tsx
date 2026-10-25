@@ -45,7 +45,7 @@ export default function SignupPage() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Verification failed");
-      router.push("/");
+      router.push("/dashboard");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Verification failed");
