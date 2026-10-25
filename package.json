@@ -5,6 +5,8 @@
   "description": "Full-stack monorepo webapp: Next.js + Prisma/Postgres, self-hosted on Linux, exposed via Cloudflare Tunnel.",
   "scripts": {
     "dev": "turbo run dev",
+    "seed": "pnpm --filter @glow/database seed",
+    "dev:seed": "pnpm seed && pnpm dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
