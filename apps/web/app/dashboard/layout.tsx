@@ -8,8 +8,8 @@ const nav = [
   { href: "/dashboard", label: "Overview" },
   { href: "/dashboard/services", label: "Services" },
   { href: "/dashboard/parties", label: "Parties" },
-  { href: "/dashboard/billinfo", label: "Bill Info" },
   { href: "/dashboard/bills", label: "Bills" },
+  { href: "/dashboard/billinfo", label: "Bill Info" },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

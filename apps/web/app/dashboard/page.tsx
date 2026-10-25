@@ -3,19 +3,17 @@
 import { useEffect, useState } from "react";
 
 export default function OverviewPage() {
-  const [counts, setCounts] = useState({ services: 0, parties: 0, billinfo: 0, bills: 0 });
+  const [counts, setCounts] = useState({ services: 0, parties: 0, bills: 0 });
 
   useEffect(() => {
     Promise.all([
       fetch("/api/services").then((r) => r.json()),
       fetch("/api/parties").then((r) => r.json()),
-      fetch("/api/billinfo").then((r) => r.json()),
       fetch("/api/bills").then((r) => r.json()),
-    ]).then(([s, p, b, bl]) => {
+    ]).then(([s, p, bl]) => {
       setCounts({
         services: s.data?.length ?? 0,
         parties: p.data?.length ?? 0,
-        billinfo: b.data?.length ?? 0,
         bills: bl.data?.length ?? 0,
       });
     });
@@ -24,7 +22,6 @@ export default function OverviewPage() {
   const cards = [
     { label: "Services", value: counts.services, href: "/dashboard/services" },
     { label: "Parties", value: counts.parties, href: "/dashboard/parties" },
-    { label: "Bill Info", value: counts.billinfo, href: "/dashboard/billinfo" },
     { label: "Bills", value: counts.bills, href: "/dashboard/bills" },
   ];
 
