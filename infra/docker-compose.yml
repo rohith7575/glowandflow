@@ -1,21 +1,2 @@
-# Development: Postgres only. Run the web app with `pnpm dev`.
-services:
-  postgres:
-    image: postgres:16-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: glow
-      POSTGRES_PASSWORD: glow
-      POSTGRES_DB: glow
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U glow -d glow"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-volumes:
-  pgdata:
+# Development: no external DB required (SQLite). This file is kept for optional tooling only.
+services: {}

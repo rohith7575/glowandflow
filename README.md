@@ -3,7 +3,7 @@
 A self-hosted full-stack webapp monorepo.
 
 - **Frontend + API**: Next.js 16 (App Router), TypeScript, Tailwind CSS v4
-- **Database**: PostgreSQL via Prisma 6
+- **Database**: SQLite via Prisma 6 (file-based, no server, survives restarts)
 - **Monorepo**: pnpm workspaces + Turborepo
 - **Hosting**: your own Linux device
 - **Public access**: Cloudflare Tunnel (no port forwarding required)
@@ -34,8 +34,9 @@ A self-hosted full-stack webapp monorepo.
 
 - Node.js >= 20 (this project uses v24)
 - pnpm >= 9
-- Docker + Docker Compose
 - (for public access) a Cloudflare account + a domain on Cloudflare
+
+No database server or Docker required — data is stored in a local SQLite file.
 
 ## 1. First-time setup
 
@@ -45,46 +46,33 @@ cd "glow and flow"
 pnpm install
 ```
 
-Start Postgres and push the schema:
+SQLite needs no server. Generate the client and create the DB file:
 
 ```bash
-docker compose -f infra/docker-compose.yml up -d
-cp apps/web/.env.example apps/web/.env.local
-# edit DATABASE_URL if needed
-DATABASE_URL="postgresql://glow:glow@localhost:5432/glow" pnpm db:push
 pnpm db:generate
-```
-
-Or run the helper:
-
-```bash
-bash deploy/setup-server.sh
+DATABASE_URL="file:$PWD/data/app.db" pnpm db:push
 ```
 
 ## 2. Development
 
 ```bash
+cp apps/web/.env.example apps/web/.env.local   # DATABASE_URL="file:./data/app.db"
 pnpm dev          # runs all apps via Turborepo
 ```
 
 Open http://localhost:3000
 
-## 3. Production on your device
-
-### Option A — Docker Compose (recommended)
+## 3. Production on your device — one command
 
 ```bash
-cp .env.production.example .env   # set POSTGRES_PASSWORD
-docker compose -f infra/docker-compose.prod.yml up -d --build
+pnpm prod
 ```
 
-App listens on http://localhost:3000
+That single command installs deps, generates the Prisma client, syncs the SQLite schema, builds the monorepo, and starts the production server on http://localhost:3000. Data persists in `data/app.db` and survives restarts.
 
-### Option B — systemd (native Node)
+### Run as a background service (systemd)
 
 ```bash
-pnpm build
-cp .env.production.example .env.production   # fill in DATABASE_URL etc.
 sudo cp deploy/glow-and-flow.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now glow-and-flow
@@ -92,6 +80,7 @@ sudo systemctl enable --now glow-and-flow
 
 > The unit assumes the repo lives at `/home/boss/Desktop/projects/glow and flow` and Node at
 > `/home/boss/.nvm/versions/node/v24.16.0/bin/node`. Adjust paths in the unit if different.
+> It runs `deploy/run.sh`, which uses an absolute path to `data/app.db`.
 
 ## 4. Make it accessible from anywhere (Cloudflare Tunnel)
 
@@ -133,28 +122,24 @@ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.ta
 
 ```bash
 git pull
-pnpm install
-DATABASE_URL="..." pnpm db:push
-pnpm build
-# Docker: docker compose -f infra/docker-compose.prod.yml up -d --build
+pnpm prod
 # systemd: sudo systemctl restart glow-and-flow
 ```
 
 ## 6. Backups
 
-Back up Postgres:
+Data lives in a single SQLite file. Back up by copying it (while the app is stopped for consistency):
 
 ```bash
-docker exec infra-postgres-1 pg_dump -U glow glow > backup.sql
+cp data/app.db backups/app-$(date +%F).db
 ```
 
 ## Environment variables
 
 | Variable | Where | Description |
 | --- | --- | --- |
-| `DATABASE_URL` | apps/web/.env.local, .env.production | Postgres connection string |
+| `DATABASE_URL` | apps/web/.env.local | SQLite file path, e.g. `file:./data/app.db` |
 | `APP_VERSION` | apps/web/.env.local | Shown in /api/health |
-| `POSTGRES_PASSWORD` | .env (prod compose) | Postgres password |
 
 ## API
 

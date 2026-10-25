@@ -7,20 +7,14 @@ cd "$ROOT"
 echo "==> Installing dependencies"
 pnpm install
 
-echo "==> Starting Postgres (dev compose)"
-docker compose -f infra/docker-compose.yml up -d
-
-echo "==> Waiting for Postgres"
-sleep 5
-
 echo "==> Generating Prisma client"
 pnpm db:generate
 
-echo "==> Pushing schema to database"
-DATABASE_URL="postgresql://glow:glow@localhost:5432/glow" pnpm db:push
+echo "==> Syncing schema to SQLite (data/app.db)"
+mkdir -p "$ROOT/data"
+DATABASE_URL="file:$ROOT/data/app.db" pnpm db:push
 
 echo "==> Building monorepo"
 pnpm build
 
-echo "==> Done. Start dev with: pnpm dev"
-echo "    or production with: pnpm --filter @glow/web start"
+echo "==> Done. Run production with: pnpm prod"

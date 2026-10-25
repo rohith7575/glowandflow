@@ -13,3 +13,4 @@ prisma/dev.db
 coverage
 *.tsbuildinfo
 apps/web/AGENTS.md
+data/
