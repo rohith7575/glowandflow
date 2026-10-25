@@ -36,21 +36,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!ready) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-gray-900" />
+      <div className="flex min-h-screen items-center justify-center bg-[#0a0c10]">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/15 border-t-gray-900" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#0a0c10]">
       <div className="mx-auto flex max-w-7xl gap-6 px-6 py-6">
         <aside className="hidden w-60 shrink-0 md:block">
-          <div className="sticky top-6 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+          <div className="sticky top-6 rounded-2xl border border-white/10 bg-[#12151c] p-4 shadow-sm">
             <div className="px-2 py-3">
               <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Glow & Flow</p>
-              <p className="mt-1 text-sm font-semibold text-gray-900">{user?.name || user?.email}</p>
-              <p className="text-xs text-gray-500">{user?.email}</p>
+              <p className="mt-1 text-sm font-semibold text-white">{user?.name || user?.email}</p>
+              <p className="text-xs text-gray-400">{user?.email}</p>
             </div>
             <nav className="mt-2 space-y-1">
               {nav.map((n) => {
@@ -61,8 +61,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     href={n.href}
                     className={`block rounded-lg px-3 py-2 text-sm font-medium transition ${
                       active
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                        ? "bg-amber-400 text-black"
+                        : "text-gray-400 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {n.label}
@@ -72,7 +72,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </nav>
             <button
               onClick={logout}
-              className="mt-4 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+              className="mt-4 w-full rounded-lg border border-white/10 px-3 py-2 text-sm font-medium text-gray-400 transition hover:bg-white/10 hover:text-white"
             >
               Log out
             </button>

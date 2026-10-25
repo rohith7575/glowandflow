@@ -28,8 +28,8 @@ export default function OverviewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-500">Manage your services, parties, bill info and bills.</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-white">Dashboard</h1>
+        <p className="mt-1 text-sm text-gray-400">Manage your services, parties, bill info and bills.</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -37,11 +37,11 @@ export default function OverviewPage() {
           <a
             key={c.label}
             href={c.href}
-            className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            className="group rounded-2xl border border-white/10 bg-[#12151c] p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
           >
             <p className="text-xs font-medium uppercase tracking-wider text-gray-400">{c.label}</p>
-            <p className="mt-3 text-4xl font-semibold tracking-tight text-gray-900">{c.value}</p>
-            <p className="mt-2 text-sm text-gray-500 group-hover:text-gray-900">View →</p>
+            <p className="mt-3 text-4xl font-semibold tracking-tight text-white">{c.value}</p>
+            <p className="mt-2 text-sm text-gray-400 group-hover:text-white">View →</p>
           </a>
         ))}
       </div>

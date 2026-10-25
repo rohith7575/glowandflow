@@ -105,17 +105,17 @@ export default function BillsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Bills</h1>
-          <p className="mt-1 text-sm text-gray-500">Create bills with a party and multiple services.</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-white">Bills</h1>
+          <p className="mt-1 text-sm text-gray-400">Create bills with a party and multiple services.</p>
         </div>
-        <button onClick={startCreate} className="rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800">
+        <button onClick={startCreate} className="rounded-lg bg-amber-400 px-4 py-2.5 text-sm font-medium text-black transition hover:bg-amber-300">
           + New bill
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#12151c] shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+          <thead className="bg-white/5 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
             <tr>
               <th className="px-6 py-3">Party</th>
               <th className="px-6 py-3">Items</th>
@@ -129,13 +129,13 @@ export default function BillsPage() {
               <tr><td colSpan={5} className="px-6 py-10 text-center text-gray-400">No bills yet.</td></tr>
             )}
             {bills.map((b) => (
-              <tr key={b.id} className="transition hover:bg-gray-50">
-                <td className="px-6 py-4 font-medium text-gray-900">{b.data.party?.name || "—"}</td>
-                <td className="px-6 py-4 text-gray-600">{b.data.items?.length ?? 0}</td>
-                <td className="px-6 py-4 text-gray-600">{b.data.total}</td>
-                <td className="px-6 py-4 text-gray-600">{new Date(b.createdAt).toLocaleDateString()}</td>
+              <tr key={b.id} className="transition hover:bg-white/5">
+                <td className="px-6 py-4 font-medium text-white">{b.data.party?.name || "—"}</td>
+                <td className="px-6 py-4 text-gray-400">{b.data.items?.length ?? 0}</td>
+                <td className="px-6 py-4 text-gray-400">{b.data.total}</td>
+                <td className="px-6 py-4 text-gray-400">{new Date(b.createdAt).toLocaleDateString()}</td>
                 <td className="px-6 py-4 text-right">
-                  <button onClick={() => startEdit(b)} className="mr-3 text-sm text-gray-600 hover:text-gray-900">Edit</button>
+                  <button onClick={() => startEdit(b)} className="mr-3 text-sm text-gray-400 hover:text-white">Edit</button>
                   <button onClick={() => remove(b.id)} className="text-sm text-red-600 hover:text-red-700">Delete</button>
                 </td>
               </tr>
@@ -147,7 +147,7 @@ export default function BillsPage() {
       <Modal open={open} onClose={() => setOpen(false)} title={editing ? "Edit bill" : "New bill"}>
         <form onSubmit={submit} className="space-y-4">
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-gray-600">Party</span>
+            <span className="mb-1 block text-xs font-medium text-gray-400">Party</span>
             <select value={partyId} onChange={(e) => setPartyId(e.target.value)} className={inputCls}>
               {parties.map((p) => (
                 <option key={p.id} value={p.id}>{p.name}</option>
@@ -155,8 +155,8 @@ export default function BillsPage() {
             </select>
           </label>
 
-          <div className="rounded-lg border border-gray-200 p-3">
-            <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-500">Add service item</p>
+          <div className="rounded-lg border border-white/10 p-3">
+            <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-400">Add service item</p>
             <div className="flex gap-2">
               <select value={pickService} onChange={(e) => setPickService(e.target.value)} className={inputCls + " flex-1"}>
                 {services.map((s) => (
@@ -170,16 +170,16 @@ export default function BillsPage() {
                 onChange={(e) => setQty(e.target.value)}
                 className={inputCls + " w-20"}
               />
-              <button type="button" onClick={addItem} className="rounded-lg bg-gray-100 px-3 text-sm font-medium text-gray-900 hover:bg-gray-200">
+              <button type="button" onClick={addItem} className="rounded-lg bg-gray-100 px-3 text-sm font-medium text-white hover:bg-white/10">
                 Add
               </button>
             </div>
           </div>
 
           {items.length > 0 && (
-            <div className="overflow-hidden rounded-lg border border-gray-200">
+            <div className="overflow-hidden rounded-lg border border-white/10">
               <table className="w-full text-sm">
-                <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+                <thead className="bg-white/5 text-xs uppercase text-gray-400">
                   <tr>
                     <th className="px-3 py-2 text-left">Service</th>
                     <th className="px-3 py-2 text-right">Rate</th>
@@ -211,7 +211,7 @@ export default function BillsPage() {
           )}
 
           {error && <p className="text-sm text-red-600">{error}</p>}
-          <button type="submit" className="w-full rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800">
+          <button type="submit" className="w-full rounded-lg bg-amber-400 px-4 py-2.5 text-sm font-medium text-black transition hover:bg-amber-300">
             {editing ? "Save changes" : "Create bill"}
           </button>
         </form>
@@ -221,4 +221,4 @@ export default function BillsPage() {
 }
 
 const inputCls =
-  "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900";
+  "w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900";

@@ -347,7 +347,6 @@ export default function LandingPage() {
             <a href="#services" className="hover:text-white transition">Services</a>
             <a href="#process" className="hover:text-white transition">Process</a>
             <a href="#contact" className="hover:text-white transition">Contact</a>
-            <Link href="/login" className="hover:text-white transition">Client login</Link>
           </div>
         </div>
       </footer>

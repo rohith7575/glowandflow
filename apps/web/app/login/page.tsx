@@ -31,19 +31,19 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center bg-gradient-to-b from-gray-50 to-white px-4">
-      <div className="w-full max-w-md rounded-3xl border border-gray-100 bg-white p-10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.12)]">
+    <div className="flex min-h-[80vh] items-center justify-center bg-gradient-to-b from-[#0a0c10] to-[#0f1219] px-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/5 bg-[#12151c] p-10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.12)]">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-900 text-white shadow-sm">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-cyan-400 text-black shadow-sm">
             <span className="text-lg font-bold">G</span>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Welcome back</h1>
-          <p className="mt-1 text-sm text-gray-500">Log in to your account.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-white">Welcome back</h1>
+          <p className="mt-1 text-sm text-gray-400">Log in to your account.</p>
         </div>
 
         <form onSubmit={submit} className="mt-6 space-y-4">
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-gray-600">Email</span>
+            <span className="mb-1 block text-xs font-medium text-gray-400">Email</span>
             <input
               type="email"
               required
@@ -53,7 +53,7 @@ export default function LoginPage() {
             />
           </label>
           <label className="block">
-            <span className="mb-1 block text-xs font-medium text-gray-600">Password</span>
+            <span className="mb-1 block text-xs font-medium text-gray-400">Password</span>
             <input
               type="password"
               required
@@ -66,15 +66,15 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+            className="w-full rounded-lg bg-amber-400 px-4 py-2.5 text-sm font-medium text-black transition hover:bg-amber-300 disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-6 text-center text-sm text-gray-400">
           No account?{" "}
-          <a href="/signup" className="font-medium text-gray-900 hover:underline">
+          <a href="/signup" className="font-medium text-white hover:underline">
             Sign up
           </a>
         </p>
@@ -84,4 +84,4 @@ export default function LoginPage() {
 }
 
 const inputCls =
-  "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900";
+  "w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900";
