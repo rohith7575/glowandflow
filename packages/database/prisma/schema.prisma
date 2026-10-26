@@ -60,8 +60,9 @@ model Party {
 }
 
 model Bill {
-  id        String   @id @default(cuid())
-  data      Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  invoiceNumber String?   @unique
+  data          Json
+  createdAt     DateTime?
+  updatedAt     DateTime  @updatedAt
 }
