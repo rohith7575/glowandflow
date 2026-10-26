@@ -49,7 +49,8 @@ export default function SearchSelect({
     );
   }, [options, query]);
 
-  const display = open ? query : selected?.label ?? "";
+  // Keep the selected name visible even while the dropdown is open.
+  const display = open && query !== "" ? query : selected?.label ?? "";
 
   return (
     <div ref={wrapRef} className={`relative ${className}`}>
@@ -64,6 +65,8 @@ export default function SearchSelect({
         onFocus={() => {
           setOpen(true);
           setQuery("");
+          // Select the current value so typing replaces it
+          requestAnimationFrame(() => inputRef.current?.select());
         }}
         className="w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm text-white placeholder:text-gray-500 outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40"
       />
