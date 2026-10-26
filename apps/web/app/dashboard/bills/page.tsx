@@ -161,7 +161,7 @@ export default function BillsPage() {
             <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-400">Add service item</p>
             <div className="flex gap-2">
               <SearchSelect
-                className="flex-1"
+                className="min-w-0 flex-1"
                 options={services.map((s) => ({
                   value: s.id,
                   label: s.name,
@@ -176,12 +176,12 @@ export default function BillsPage() {
                 min="1"
                 value={qty}
                 onChange={(e) => setQty(e.target.value)}
-                className={inputCls + " w-20"}
+                className="w-16 shrink-0 rounded-lg border border-white/15 bg-[#12151c] px-2 py-2 text-sm text-white outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40"
               />
               <button
                 type="button"
                 onClick={addItem}
-                className="rounded-lg bg-white px-3 text-sm font-medium text-black transition hover:bg-amber-400"
+                className="shrink-0 rounded-lg bg-white px-3 text-sm font-medium text-black transition hover:bg-amber-400"
               >
                 Add
               </button>
