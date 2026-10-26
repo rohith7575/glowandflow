@@ -31,7 +31,7 @@ export default function BillPdf({ bill, company }: { bill: any; company: any }) 
   const items: any[] = Array.isArray(data.items) ? data.items : [];
   const total = data.total ?? items.reduce((s: number, i: any) => s + (i.rate || 0) * (i.qty || 0), 0);
   const party = data.party;
-  const date = bill?.createdAt
+  const date = bill?.invoiceNumber && bill?.createdAt
     ? new Date(bill.createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
     : "Draft";
   const invNo = bill?.invoiceNumber || "DRAFT";
@@ -91,10 +91,6 @@ export default function BillPdf({ bill, company }: { bill: any; company: any }) 
 
         <View style={styles.footer}>
           <Text style={styles.muted}>Thank you for your business.</Text>
-          <View style={styles.signatureRow}>
-            <View style={styles.sigLine} />
-            <Text style={styles.muted}>Authorised signature</Text>
-          </View>
         </View>
       </Page>
     </Document>

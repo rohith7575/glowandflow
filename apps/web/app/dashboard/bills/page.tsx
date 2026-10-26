@@ -164,13 +164,13 @@ export default function BillsPage() {
                 <td className="px-6 py-4 text-gray-400">{b.data.items?.length ?? 0}</td>
                 <td className="px-6 py-4 text-gray-400">{b.data.total}</td>
                 <td className="px-6 py-4 text-gray-400">
-                  {b.createdAt ? new Date(b.createdAt).toLocaleDateString() : <span className="text-gray-500">Draft</span>}
+                  {b.invoiceNumber && b.createdAt ? new Date(b.createdAt).toLocaleDateString() : <span className="text-gray-500">Draft</span>}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-wrap justify-end gap-2">
                     <button onClick={() => setPreviewBill(b)} className="text-sm text-gray-400 hover:text-white">Preview</button>
                     <button onClick={() => startEdit(b)} className="text-sm text-gray-400 hover:text-white">Edit</button>
-                    {!b.createdAt && (
+                    {!b.invoiceNumber && (
                       <button onClick={() => finalise(b.id)} className="rounded-md bg-amber-400 px-2.5 py-1 text-xs font-semibold text-black transition hover:bg-amber-300">
                         Finalise
                       </button>
@@ -296,7 +296,7 @@ export default function BillsPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                {!previewBill.createdAt && (
+                {!previewBill.invoiceNumber && (
                   <button
                     onClick={() => finalise(previewBill.id)}
                     className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-300"

@@ -17,8 +17,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const existing = await prisma.bill.findUnique({ where: { id } });
     if (!existing) return NextResponse.json({ data: null, error: "Not found" }, { status: 404 });
 
-    // Already finalised: idempotent
-    if (existing.createdAt !== null && existing.invoiceNumber) {
+    // Already finalised with an invoice number: idempotent
+    if (existing.invoiceNumber) {
       return NextResponse.json({ data: existing, error: null });
     }
 
@@ -38,7 +38,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
     const bill = await prisma.bill.update({
       where: { id },
-      data: { invoiceNumber, createdAt: new Date() },
+      data: { invoiceNumber, createdAt: existing.createdAt ?? new Date() },
     });
     return NextResponse.json({ data: bill, error: null });
   } catch (err) {

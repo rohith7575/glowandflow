@@ -62,7 +62,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const snap = bi ? snapshot(bi) : data.billInfo ?? null;
     if (snap) data.billInfo = snap;
 
-    const wasFinalised = existing.createdAt !== null;
+    const wasFinalised = existing.invoiceNumber !== null;
 
     const bill = await prisma.bill.update({
       where: { id },
