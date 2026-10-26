@@ -119,6 +119,7 @@ export default function BillsPage() {
     const res = await fetch(`/api/bills/${id}/finalise`, { method: "POST" });
     const json = await res.json();
     if (!res.ok) { alert(json.error || "Finalise failed"); return; }
+    if (previewBill && previewBill.id === id) setPreviewBill(json.data);
     load();
   }
 
@@ -165,13 +166,17 @@ export default function BillsPage() {
                 <td className="px-6 py-4 text-gray-400">
                   {b.createdAt ? new Date(b.createdAt).toLocaleDateString() : <span className="text-gray-500">Draft</span>}
                 </td>
-                <td className="px-6 py-4 text-right">
-                  <button onClick={() => setPreviewBill(b)} className="mr-3 text-sm text-gray-400 hover:text-white">Preview</button>
-                  <button onClick={() => startEdit(b)} className="mr-3 text-sm text-gray-400 hover:text-white">Edit</button>
-                  {!b.createdAt && (
-                    <button onClick={() => finalise(b.id)} className="mr-3 text-sm text-amber-400 hover:text-amber-300">Finalise</button>
-                  )}
-                  <button onClick={() => remove(b.id)} className="text-sm text-red-600 hover:text-red-700">Delete</button>
+                <td className="px-6 py-4">
+                  <div className="flex flex-wrap justify-end gap-2">
+                    <button onClick={() => setPreviewBill(b)} className="text-sm text-gray-400 hover:text-white">Preview</button>
+                    <button onClick={() => startEdit(b)} className="text-sm text-gray-400 hover:text-white">Edit</button>
+                    {!b.createdAt && (
+                      <button onClick={() => finalise(b.id)} className="rounded-md bg-amber-400 px-2.5 py-1 text-xs font-semibold text-black transition hover:bg-amber-300">
+                        Finalise
+                      </button>
+                    )}
+                    <button onClick={() => remove(b.id)} className="text-sm text-red-600 hover:text-red-700">Delete</button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -291,10 +296,18 @@ export default function BillsPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
+                {!previewBill.createdAt && (
+                  <button
+                    onClick={() => finalise(previewBill.id)}
+                    className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-300"
+                  >
+                    Finalise
+                  </button>
+                )}
                 <a
                   href={pdfUrl(previewBill, true)}
                   download
-                  className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-300"
+                  className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:text-white"
                 >
                   Download PDF
                 </a>
