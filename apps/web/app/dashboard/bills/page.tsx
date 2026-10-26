@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Modal from "../../../components/Modal";
+import SearchSelect from "../../../components/SearchSelect";
 
 type Party = { id: string; name: string; phone: string | null };
-type Service = { id: string; name: string; rate: number };
-type LineItem = { serviceId: string; name: string; rate: number; qty: number };
+type Service = { id: string; name: string; rate: number; unit: string };
+type LineItem = { serviceId: string; name: string; rate: number; qty: number; unit: string };
 type BillData = {
   party?: { id: string; name: string; phone: string | null };
   items: LineItem[];
@@ -63,7 +64,7 @@ export default function BillsPage() {
     const s = services.find((x) => x.id === pickService);
     if (!s) return;
     const q = Number(qty) || 1;
-    setItems([...items, { serviceId: s.id, name: s.name, rate: s.rate, qty: q }]);
+    setItems([...items, { serviceId: s.id, name: s.name, rate: s.rate, qty: q, unit: s.unit || "piece" }]);
   }
 
   function removeItem(idx: number) {
@@ -146,23 +147,30 @@ export default function BillsPage() {
 
       <Modal open={open} onClose={() => setOpen(false)} title={editing ? "Edit bill" : "New bill"}>
         <form onSubmit={submit} className="space-y-4">
-          <label className="block">
+          <div className="block">
             <span className="mb-1 block text-xs font-medium text-gray-400">Party</span>
-            <select value={partyId} onChange={(e) => setPartyId(e.target.value)} className={inputCls}>
-              {parties.map((p) => (
-                <option key={p.id} value={p.id}>{p.name}</option>
-              ))}
-            </select>
-          </label>
+            <SearchSelect
+              options={parties.map((p) => ({ value: p.id, label: p.name, sublabel: p.phone ?? undefined }))}
+              value={partyId}
+              onChange={setPartyId}
+              placeholder="Search party..."
+            />
+          </div>
 
           <div className="rounded-lg border border-white/10 p-3">
             <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-400">Add service item</p>
             <div className="flex gap-2">
-              <select value={pickService} onChange={(e) => setPickService(e.target.value)} className={inputCls + " flex-1"}>
-                {services.map((s) => (
-                  <option key={s.id} value={s.id}>{s.name} ({s.rate})</option>
-                ))}
-              </select>
+              <SearchSelect
+                className="flex-1"
+                options={services.map((s) => ({
+                  value: s.id,
+                  label: s.name,
+                  sublabel: `${s.rate} / ${s.unit || "piece"}`,
+                }))}
+                value={pickService}
+                onChange={setPickService}
+                placeholder="Search service..."
+              />
               <input
                 type="number"
                 min="1"
@@ -170,7 +178,11 @@ export default function BillsPage() {
                 onChange={(e) => setQty(e.target.value)}
                 className={inputCls + " w-20"}
               />
-              <button type="button" onClick={addItem} className="rounded-lg bg-gray-100 px-3 text-sm font-medium text-white hover:bg-white/10">
+              <button
+                type="button"
+                onClick={addItem}
+                className="rounded-lg bg-white px-3 text-sm font-medium text-black transition hover:bg-amber-400"
+              >
                 Add
               </button>
             </div>
@@ -184,6 +196,7 @@ export default function BillsPage() {
                     <th className="px-3 py-2 text-left">Service</th>
                     <th className="px-3 py-2 text-right">Rate</th>
                     <th className="px-3 py-2 text-right">Qty</th>
+                    <th className="px-3 py-2 text-left">Unit</th>
                     <th className="px-3 py-2 text-right">Amount</th>
                     <th className="px-3 py-2"></th>
                   </tr>
@@ -194,6 +207,7 @@ export default function BillsPage() {
                       <td className="px-3 py-2">{it.name}</td>
                       <td className="px-3 py-2 text-right">{it.rate}</td>
                       <td className="px-3 py-2 text-right">{it.qty}</td>
+                      <td className="px-3 py-2 capitalize text-gray-400">{it.unit || "piece"}</td>
                       <td className="px-3 py-2 text-right">{it.rate * it.qty}</td>
                       <td className="px-3 py-2 text-right">
                         <button type="button" onClick={() => removeItem(idx)} className="text-red-600">✕</button>
@@ -201,7 +215,7 @@ export default function BillsPage() {
                     </tr>
                   ))}
                   <tr className="font-medium">
-                    <td className="px-3 py-2" colSpan={3}>Total</td>
+                    <td className="px-3 py-2" colSpan={4}>Total</td>
                     <td className="px-3 py-2 text-right">{total}</td>
                     <td />
                   </tr>
@@ -221,4 +235,4 @@ export default function BillsPage() {
 }
 
 const inputCls =
-  "w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900";
+  "w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm text-white outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40";

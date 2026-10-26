@@ -3,13 +3,15 @@
 import { useEffect, useState } from "react";
 import Modal from "../../../components/Modal";
 
-type Service = { id: string; name: string; rate: number };
+type Service = { id: string; name: string; rate: number; unit: string };
+
+const UNITS = ["number", "piece", "set", "feet", "meter"] as const;
 
 export default function ServicesPage() {
   const [items, setItems] = useState<Service[]>([]);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Service | null>(null);
-  const [form, setForm] = useState({ name: "", rate: "" });
+  const [form, setForm] = useState({ name: "", rate: "", unit: "piece" });
   const [error, setError] = useState<string | null>(null);
 
   async function load() {
@@ -24,14 +26,14 @@ export default function ServicesPage() {
 
   function startCreate() {
     setEditing(null);
-    setForm({ name: "", rate: "" });
+    setForm({ name: "", rate: "", unit: "piece" });
     setError(null);
     setOpen(true);
   }
 
   function startEdit(s: Service) {
     setEditing(s);
-    setForm({ name: s.name, rate: String(s.rate) });
+    setForm({ name: s.name, rate: String(s.rate), unit: s.unit || "piece" });
     setError(null);
     setOpen(true);
   }
@@ -39,7 +41,7 @@ export default function ServicesPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    const payload = { name: form.name, rate: Number(form.rate) };
+    const payload = { name: form.name, rate: Number(form.rate), unit: form.unit };
     const url = editing ? `/api/services/${editing.id}` : "/api/services";
     const method = editing ? "PUT" : "POST";
     const res = await fetch(url, {
@@ -83,13 +85,14 @@ export default function ServicesPage() {
             <tr>
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">Rate</th>
+              <th className="px-6 py-3">Unit</th>
               <th className="px-6 py-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
             {items.length === 0 && (
               <tr>
-                <td colSpan={3} className="px-6 py-10 text-center text-gray-400">
+                <td colSpan={4} className="px-6 py-10 text-center text-gray-400">
                   No services yet.
                 </td>
               </tr>
@@ -98,6 +101,7 @@ export default function ServicesPage() {
               <tr key={s.id} className="transition hover:bg-white/5">
                 <td className="px-6 py-4 font-medium text-white">{s.name}</td>
                 <td className="px-6 py-4 text-gray-400">{s.rate}</td>
+                <td className="px-6 py-4 capitalize text-gray-400">{s.unit || "piece"}</td>
                 <td className="px-6 py-4 text-right">
                   <button onClick={() => startEdit(s)} className="mr-3 text-sm text-gray-400 hover:text-white">
                     Edit
@@ -134,6 +138,18 @@ export default function ServicesPage() {
               className={inputCls}
             />
           </label>
+          <label className="block">
+            <span className="mb-1 block text-xs font-medium text-gray-400">Unit</span>
+            <select
+              value={form.unit}
+              onChange={(e) => setForm({ ...form, unit: e.target.value })}
+              className={inputCls}
+            >
+              {UNITS.map((u) => (
+                <option key={u} value={u} className="capitalize">{u}</option>
+              ))}
+            </select>
+          </label>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button
             type="submit"
@@ -148,4 +164,4 @@ export default function ServicesPage() {
 }
 
 const inputCls =
-  "w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900";
+  "w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm text-white outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40";

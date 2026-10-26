@@ -3,9 +3,12 @@ import { prisma } from "@glow/database";
 import { z } from "zod";
 import { getCurrentUser } from "../../../lib/session";
 
+const units = ["number", "piece", "set", "feet", "meter"] as const;
+
 const schema = z.object({
   name: z.string().min(1),
   rate: z.number().nonnegative(),
+  unit: z.enum(units).default("piece"),
 });
 
 export async function GET(req: Request) {
