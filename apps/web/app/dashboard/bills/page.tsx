@@ -223,7 +223,7 @@ export default function BillsPage() {
                 <td className="px-6 py-4 text-gray-400">{b.data.items?.length ?? 0}</td>
                 <td className="px-6 py-4 text-gray-400">{b.data.total}</td>
                 <td className="px-6 py-4 text-gray-400">
-                  {b.invoiceNumber && b.createdAt ? new Date(b.createdAt).toLocaleDateString() : <span className="text-gray-500">Draft</span>}
+                  {b.invoiceNumber && b.createdAt ? new Date(b.createdAt).toLocaleDateString("en-GB") : <span className="text-gray-500">Draft</span>}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-wrap justify-end gap-2">
@@ -351,7 +351,7 @@ export default function BillsPage() {
                   {previewBill.invoiceNumber || "Draft invoice"}
                 </p>
                 <p className="text-xs text-gray-400">
-                  {previewBill.data.party?.name || "—"} · {previewBill.createdAt ? new Date(previewBill.createdAt).toLocaleDateString() : "Draft"}
+                  {previewBill.data.party?.name || "—"} · {previewBill.createdAt ? new Date(previewBill.createdAt).toLocaleDateString("en-GB") : "Draft"}
                 </p>
               </div>
               <div className="flex items-center gap-2">
