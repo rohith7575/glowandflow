@@ -30,8 +30,35 @@ export default function BillsPage() {
   const [qty, setQty] = useState("1");
   const [error, setError] = useState<string | null>(null);
 
+  // Filters
+  const [nameQuery, setNameQuery] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
   // Preview state
   const [previewBill, setPreviewBill] = useState<Bill | null>(null);
+
+  const filteredBills = bills.filter((b) => {
+    const q = nameQuery.trim().toLowerCase();
+    if (q) {
+      const party = (b.data.party?.name || "").toLowerCase();
+      const inv = (b.invoiceNumber || "").toLowerCase();
+      if (!party.includes(q) && !inv.includes(q)) return false;
+    }
+    if (fromDate || toDate) {
+      if (!b.createdAt) return false;
+      const d = new Date(b.createdAt).getTime();
+      if (fromDate) {
+        const from = new Date(fromDate + "T00:00:00").getTime();
+        if (d < from) return false;
+      }
+      if (toDate) {
+        const to = new Date(toDate + "T23:59:59").getTime();
+        if (d > to) return false;
+      }
+    }
+    return true;
+  });
 
   async function load() {
     const [br, pr, sr, bir] = await Promise.all([
@@ -139,6 +166,38 @@ export default function BillsPage() {
         </button>
       </div>
 
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <input
+          value={nameQuery}
+          onChange={(e) => setNameQuery(e.target.value)}
+          placeholder="Search by party or invoice #..."
+          className="w-full rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm text-white placeholder:text-gray-500 outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40 sm:max-w-xs"
+        />
+        <div className="flex items-center gap-2">
+          <input
+            type="date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            className="rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm text-white outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40"
+          />
+          <span className="text-gray-500">to</span>
+          <input
+            type="date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+            className="rounded-lg border border-white/15 bg-[#12151c] px-3 py-2 text-sm text-white outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40"
+          />
+          {(nameQuery || fromDate || toDate) && (
+            <button
+              onClick={() => { setNameQuery(""); setFromDate(""); setToDate(""); }}
+              className="rounded-lg border border-white/10 px-3 py-2 text-sm text-gray-400 transition hover:bg-white/10 hover:text-white"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
+
       <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#12151c] shadow-sm">
         <table className="w-full text-sm">
           <thead className="bg-white/5 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
@@ -152,10 +211,10 @@ export default function BillsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-            {bills.length === 0 && (
-              <tr><td colSpan={6} className="px-6 py-10 text-center text-gray-400">No bills yet.</td></tr>
+            {filteredBills.length === 0 && (
+              <tr><td colSpan={6} className="px-6 py-10 text-center text-gray-400">No bills match.</td></tr>
             )}
-            {bills.map((b) => (
+            {filteredBills.map((b) => (
               <tr key={b.id} className="transition hover:bg-white/5">
                 <td className="px-6 py-4 font-mono text-xs text-amber-300">
                   {b.invoiceNumber || <span className="rounded bg-white/10 px-2 py-0.5 text-gray-400">Draft</span>}
