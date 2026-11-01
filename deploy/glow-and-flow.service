@@ -10,6 +10,9 @@ WorkingDirectory=/home/boss/Desktop/projects/glow and flow
 Environment="NODE_ENV=production"
 Environment="PORT=3000"
 Environment="DATABASE_URL=file:/home/boss/Desktop/projects/glow and flow/data/app.db"
+Environment="REPO_ROOT=/home/boss/Desktop/projects/glow and flow"
+Environment="PATH=/home/boss/.nvm/versions/node/v24.16.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+EnvironmentFile=-/home/boss/Desktop/projects/glow and flow/data/runtime.env
 ExecStart=/home/boss/.nvm/versions/node/v24.16.0/bin/node /home/boss/Desktop/projects/glow and flow/apps/web/.next/standalone/apps/web/server.js
 Restart=on-failure
 RestartSec=5

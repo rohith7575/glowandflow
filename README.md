@@ -118,13 +118,47 @@ For 24/7 availability, disable sleep/suspend on the host:
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
 
-## 5. Updating
+## 5. Updating (in-app "Check for updates" button)
 
+The app can update itself from a GitHub Release without any inbound webhook (works even with a changing quick-tunnel URL).
+
+### How it works
+1. You publish a release (e.g. `v0.2.0`) on GitHub.
+2. In the dashboard, click **"Check for updates"**. The app queries the GitHub Releases API and, if a newer release exists, the button becomes **"Update to v0.2.0"**.
+3. Clicking it spawns `deploy/update.sh` in the background (detached), which checks out the release tag, backs up the DB + previous build, rebuilds, restarts the systemd service, and health-checks `/api/health`.
+4. The button shows "Updating… do not close this tab" and reloads the page once the new version is live.
+5. On failure the previous build and git SHA are restored.
+
+### One-time setup
+1. Set the repo (and optional token) in the host env:
+   ```bash
+   # data/runtime.env (or .env.production)
+   GITHUB_REPO=yourname/glow-and-flow
+   # GITHUB_TOKEN=ghp_xxx   # optional, raises rate limit / needed for private repos
+   REPO_ROOT=/home/boss/Desktop/projects/glow and flow
+   ```
+   Reload the service:
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl restart glow-and-flow
+   ```
+2. Allow the `boss` user to restart the service without a password (for the updater):
+   ```bash
+   sudo visudo -f /etc/sudoers.d/glow-and-flow
+   # add: boss ALL=(ALL) NOPASSWD: /bin/systemctl restart glow-and-flow, /bin/systemctl stop glow-and-flow, /bin/systemctl start glow-and-flow
+   ```
+
+No GitHub-side configuration is required.
+
+### Manual update (fallback)
 ```bash
-git pull
+git fetch --tags && git checkout v0.2.0
 pnpm prod
 # systemd: sudo systemctl restart glow-and-flow
 ```
+
+### Logs
+Update attempts are logged to `data/updates.log` and trigger events to `data/update-trigger.log`. Status is tracked in `data/update.status`.
 
 ## 6. Backups
 
@@ -144,6 +178,8 @@ cp data/app.db backups/app-$(date +%F).db
 ## API
 
 - `GET /api/health` → `{ ok, uptime, timestamp, version }`
+- `GET /api/update/status` → check GitHub Releases for a newer version (auth required)
+- `POST /api/update` → trigger an update to a release tag (auth required)
 - `GET /api/users` → list users
 - `POST /api/users` → `{ email, name? }` create user
 

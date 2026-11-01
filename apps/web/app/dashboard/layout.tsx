@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import UpdateButton from "../../components/UpdateButton";
 
 const nav = [
   { href: "/dashboard", label: "Overview" },
@@ -54,6 +55,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </Link>
           <div className="flex items-center gap-3">
             <span className="hidden text-xs text-gray-400 sm:block">{user?.email}</span>
+            <UpdateButton />
             <button
               onClick={logout}
               className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-300"
