@@ -7,6 +7,7 @@ import UpdateButton from "../../components/UpdateButton";
 
 const nav = [
   { href: "/dashboard", label: "Overview" },
+  { href: "/dashboard/profile", label: "Profile" },
   { href: "/dashboard/services", label: "Services" },
   { href: "/dashboard/parties", label: "Parties" },
   { href: "/dashboard/bills", label: "Bills" },
@@ -27,7 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         else setUser(j.data);
       })
       .finally(() => setReady(true));
-  }, [router]);
+  }, [router, pathname]);
 
   async function logout() {
     await fetch("/api/auth/logout", { method: "POST" });
