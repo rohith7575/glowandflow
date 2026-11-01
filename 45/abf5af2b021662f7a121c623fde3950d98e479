@@ -1,0 +1,32 @@
+.env.production.example
+  h_bf19f0f446d5d8 6-8
+README.md
+  h_bf19f0f446d5d8 121,123-153,155,160-162,181-182
+apps/web/.env.example
+  h_bf19f0f446d5d8 10-15
+apps/web/app/api/update/route.ts
+  h_bf19f0f446d5d8 1-70
+apps/web/app/api/update/status/route.ts
+  h_bf19f0f446d5d8 1-101
+apps/web/app/dashboard/layout.tsx
+  h_bf19f0f446d5d8 6,58
+apps/web/components/UpdateButton.tsx
+  h_bf19f0f446d5d8 1-157
+apps/web/lib/version.ts
+  h_bf19f0f446d5d8 1-23
+deploy/glow-and-flow.service
+  h_bf19f0f446d5d8 13-15
+deploy/update.sh
+  h_bf19f0f446d5d8 1-169
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "45abf5af2b021662f7a121c623fde3950d98e479",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
