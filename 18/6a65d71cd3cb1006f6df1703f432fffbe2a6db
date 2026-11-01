@@ -1,0 +1,24 @@
+.env.production.example
+  h_bf19f0f446d5d8 6,8
+README.md
+  h_bf19f0f446d5d8 81-82,136,138,145,148
+apps/web/.env.example
+  h_bf19f0f446d5d8 12,15
+apps/web/app/api/update/route.ts
+  h_bf19f0f446d5d8 27
+deploy/glow-and-flow.service
+  h_bf19f0f446d5d8 3,7-9,12-21
+deploy/update.sh
+  h_bf19f0f446d5d8 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "186a65d71cd3cb1006f6df1703f432fffbe2a6db",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
