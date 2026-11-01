@@ -61,7 +61,7 @@ export async function GET(req: Request) {
   }
 
   const fresh = new URL(req.url).searchParams.get("fresh") === "1";
-  const current = process.env.APP_VERSION ?? "0.1.0";
+  const current = process.env.APP_VERSION ?? "0.1.1";
 
   if (!fresh && cache && Date.now() - cache.at < TTL_MS && cache.current === current) {
     return NextResponse.json({
