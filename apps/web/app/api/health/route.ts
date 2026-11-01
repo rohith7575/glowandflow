@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { HealthStatus } from "@glow/types";
+import { getCurrentVersion } from "../../../lib/version";
 
 export const dynamic = "force-dynamic";
 
@@ -8,7 +9,7 @@ export async function GET() {
     ok: true,
     uptime: Math.round(process.uptime()),
     timestamp: new Date().toISOString(),
-    version: process.env.APP_VERSION ?? "0.1.3",
+    version: getCurrentVersion(),
   };
   return NextResponse.json(body);
 }

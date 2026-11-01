@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "../../../../lib/session";
-import { normalizeVersion, isNewer } from "../../../../lib/version";
+import { normalizeVersion, isNewer, getCurrentVersion } from "../../../../lib/version";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +61,7 @@ export async function GET(req: Request) {
   }
 
   const fresh = new URL(req.url).searchParams.get("fresh") === "1";
-  const current = process.env.APP_VERSION ?? "0.1.3";
+  const current = getCurrentVersion();
 
   if (!fresh && cache && Date.now() - cache.at < TTL_MS && cache.current === current) {
     return NextResponse.json({

@@ -120,7 +120,14 @@ if [ "$FAIL" = "0" ]; then
   rm -rf "$ROOT/apps/web/.next/standalone/apps/web/.next/static"
   cp -r "$ROOT/apps/web/.next/static" "$ROOT/apps/web/.next/standalone/apps/web/.next/static"
   if [ -d "$ROOT/apps/web/public" ]; then
+    rm -rf "$ROOT/apps/web/.next/standalone/apps/web/public"
     cp -r "$ROOT/apps/web/public" "$ROOT/apps/web/.next/standalone/apps/web/public"
+  fi
+  # Verify static assets (incl. CSS) were copied; fail loudly instead of
+  # serving unstyled HTML.
+  if ! ls "$ROOT/apps/web/.next/standalone/apps/web/.next/static/chunks/"*.css >/dev/null 2>&1; then
+    log "WARNING: no CSS chunk found in standalone static after copy"
+    FAIL=1
   fi
 fi
 

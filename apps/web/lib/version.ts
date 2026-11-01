@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 // Tiny semver helpers (no external dependency).
 
 export function normalizeVersion(tag: string): string {
@@ -20,4 +23,31 @@ export function compareVersions(a: string, b: string): number {
 
 export function isNewer(candidate: string, current: string): boolean {
   return compareVersions(candidate, current) > 0;
+}
+
+/**
+ * Resolve the version the running app is actually on.
+ *
+ * In production we prefer the version from the checked-out code's package.json
+ * (REPO_ROOT/package.json), which is updated atomically with the code during an
+ * update and cannot drift the way an env var can. In dev (no REPO_ROOT) we fall
+ * back to APP_VERSION from .env.local, then "0.1.0".
+ */
+export function getCurrentVersion(): string {
+  const repoRoot = process.env.REPO_ROOT;
+  if (repoRoot) {
+    try {
+      const pkgPath = path.join(repoRoot, "package.json");
+      if (fs.existsSync(pkgPath)) {
+        const raw = fs.readFileSync(pkgPath, "utf8");
+        const parsed = JSON.parse(raw) as { version?: string };
+        if (parsed?.version) return normalizeVersion(parsed.version);
+      }
+    } catch {
+      // fall through to env fallback
+    }
+  }
+  const envVersion = process.env.APP_VERSION;
+  if (envVersion && envVersion.trim()) return normalizeVersion(envVersion);
+  return "0.1.0";
 }
