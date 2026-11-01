@@ -128,7 +128,7 @@ if [ "$FAIL" = "1" ]; then
   log "build failed; restoring previous build + git sha"
   restore_build
   cd "$ROOT" && git reset --hard "$PREV_SHA" >>"$LOG" 2>&1
-  VERSION="${APP_VERSION:-0.1.2}"
+  VERSION="${APP_VERSION:-0.1.3}"
 fi
 
 # Trigger restart via process kill (systemd Restart=always brings it back up

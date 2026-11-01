@@ -1,6 +1,6 @@
 {
   "name": "glow-and-flow",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "description": "Full-stack monorepo webapp: Next.js + Prisma/Postgres, self-hosted on Linux, exposed via Cloudflare Tunnel.",
   "scripts": {
