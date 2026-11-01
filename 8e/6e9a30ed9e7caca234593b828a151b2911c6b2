@@ -1,0 +1,20 @@
+apps/web/app/layout.tsx
+  h_bf19f0f446d5d8 4,27
+apps/web/components/HostLogger.tsx
+  h_bf19f0f446d5d8 1-14
+apps/web/instrumentation.ts
+  h_bf19f0f446d5d8 1-13
+deploy/run.sh
+  h_bf19f0f446d5d8 37-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8e6e9a30ed9e7caca234593b828a151b2911c6b2",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
