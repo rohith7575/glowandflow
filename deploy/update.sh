@@ -70,9 +70,9 @@ restore_build() {
 # Record running status
 printf '{"state":"running","tag":"%s","startedAt":"%s"}\n' "$TAG" "$(date -Is)" >"$STATUS"
 
-# Stop service
-log "stopping $SERVICE"
-sudo systemctl stop "$SERVICE" || true
+# NOTE: service is NOT stopped here. Build runs while the app keeps serving
+# the old build; the process is killed at the end so systemd (Restart=always)
+# brings it back up with the new build. No sudo required (boss owns the proc).
 
 # Checkout release
 log "checking out $TAG"
@@ -131,9 +131,13 @@ if [ "$FAIL" = "1" ]; then
   VERSION="${APP_VERSION:-0.1.2}"
 fi
 
-# Start service
-log "starting $SERVICE"
-sudo systemctl start "$SERVICE" || true
+# Trigger restart via process kill (systemd Restart=always brings it back up
+# with the new build). No sudo needed: boss owns the node process.
+if [ "$FAIL" = "0" ]; then
+  log "triggering service restart (killing node process)"
+  pkill -TERM -f "standalone/apps/web/server.js" || true
+  sleep 2
+fi
 
 if [ "${FAIL:-0}" = "1" ]; then
   log "update FAILED during build; previous build restored"

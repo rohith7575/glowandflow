@@ -142,11 +142,9 @@ The app can update itself from a GitHub Release without any inbound webhook (wor
    sudo systemctl daemon-reload
    sudo systemctl restart glow-and-flow
    ```
-2. Allow the `rohith` user to restart the service without a password (for the updater):
-   ```bash
-   sudo visudo -f /etc/sudoers.d/glow-and-flow
-   # add: rohith ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart glow-and-flow, /usr/bin/systemctl stop glow-and-flow, /usr/bin/systemctl start glow-and-flow
-   ```
+2. Make sure the systemd unit uses `Restart=always` (the provided unit does) so that
+   when the updater kills the Node process, systemd brings it back up with the new
+   build. No passwordless sudo is required.
 
 No GitHub-side configuration is required.
 
