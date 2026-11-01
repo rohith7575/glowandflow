@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Fraunces } from "next/font/google";
 import "./globals.css";
+import HostLogger from "../components/HostLogger";
 
 const sans = Space_Grotesk({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body className="min-h-screen bg-[#0a0c10] text-gray-100 antialiased font-[var(--font-sans)]">
+        <HostLogger />
         {children}
       </body>
     </html>

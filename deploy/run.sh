@@ -34,5 +34,6 @@ if [ -d "$ROOT/apps/web/public" ]; then
   cp -r "$ROOT/apps/web/public" "$ROOT/apps/web/.next/standalone/apps/web/public"
 fi
 
-echo "==> Starting production server on http://localhost:3000"
+echo "==> Starting production server on http://localhost:${PORT:-3000}"
+echo "==> Host address: ${NEXT_PUBLIC_APP_URL:-http://localhost:${PORT:-3000}}"
 PORT=3000 node "$ROOT/apps/web/.next/standalone/apps/web/server.js"
