@@ -30,7 +30,7 @@ log "=== update start (prev sha $PREV_SHA) tag=${TAG:-<latest>} ==="
 # Resolve target tag
 git fetch --tags --prune origin >>"$LOG" 2>&1
 if [ -z "$TAG" ]; then
-  TAG="$(git describe --tags --abbrev=0 origin/main 2>/dev/null || git describe --tags --abbrev=0 2>/dev/null || true)"
+  TAG="$(git describe --tags --abbrev=0 origin/master 2>/dev/null || git describe --tags --abbrev=0 2>/dev/null || true)"
 fi
 if [ -z "$TAG" ]; then
   log "no release tag found; aborting"

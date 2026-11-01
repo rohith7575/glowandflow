@@ -1,19 +1,24 @@
 [Unit]
 Description=Glow & Flow web app (Next.js)
-After=network.target docker.service
-Wants=docker.service
+After=network.target
 
 [Service]
 Type=simple
-User=boss
-WorkingDirectory=/home/boss/Desktop/projects/glow and flow
+User=rohith
+WorkingDirectory=/home/rohith/Desktop/glowandflow
+KillMode=process
 Environment="NODE_ENV=production"
 Environment="PORT=3000"
-Environment="DATABASE_URL=file:/home/boss/Desktop/projects/glow and flow/data/app.db"
-Environment="REPO_ROOT=/home/boss/Desktop/projects/glow and flow"
-Environment="PATH=/home/boss/.nvm/versions/node/v24.16.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-EnvironmentFile=-/home/boss/Desktop/projects/glow and flow/data/runtime.env
-ExecStart=/home/boss/.nvm/versions/node/v24.16.0/bin/node /home/boss/Desktop/projects/glow and flow/apps/web/.next/standalone/apps/web/server.js
+Environment="DATABASE_URL=file:/home/rohith/Desktop/glowandflow/data/app.db"
+Environment="JWT_SECRET=83f219a65bcf3f9f2ac6d16d74fea1de753352968c81878912ae9162@3b92b8d"
+Environment="GITHUB_REPO=rohith7575/glowandflow"
+Environment="PATH=/home/rohith/.nvm/versions/node/v22.23.4/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="REPO_ROOT=/home/rohith/Desktop/glowandflow"
+Environment="APP_VERSION=0.1.0"
+EnvironmentFile=-/home/rohith/Desktop/glowandflow/data/runtime.env
+
+ExecStart=/home/rohith/.nvm/versions/node/v22.23.4/bin/node /home/rohith/Desktop/glowandflow/apps/web/.next/standalone/apps/web/server.js
+
 Restart=on-failure
 RestartSec=5
 

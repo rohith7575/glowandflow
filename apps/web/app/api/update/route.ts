@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  const root = process.env.REPO_ROOT || "/home/boss/Desktop/projects/glow and flow";
+  const root = process.env.REPO_ROOT || "/home/rohith/Desktop/glowandflow";
 
   if (isUpdateRunning(root)) {
     return NextResponse.json({ error: "Update already in progress" }, { status: 409 });

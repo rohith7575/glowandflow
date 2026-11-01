@@ -78,8 +78,8 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now glow-and-flow
 ```
 
-> The unit assumes the repo lives at `/home/boss/Desktop/projects/glow and flow` and Node at
-> `/home/boss/.nvm/versions/node/v24.16.0/bin/node`. Adjust paths in the unit if different.
+> The unit assumes the repo lives at `/home/rohith/Desktop/glowandflow` and Node at
+> `/home/rohith/.nvm/versions/node/v22.23.4/bin/node`. Adjust paths in the unit if different.
 > It runs `deploy/run.sh`, which uses an absolute path to `data/app.db`.
 
 ## 4. Make it accessible from anywhere (Cloudflare Tunnel)
@@ -133,19 +133,19 @@ The app can update itself from a GitHub Release without any inbound webhook (wor
 1. Set the repo (and optional token) in the host env:
    ```bash
    # data/runtime.env (or .env.production)
-   GITHUB_REPO=yourname/glow-and-flow
+   GITHUB_REPO=rohith7575/glowandflow
    # GITHUB_TOKEN=ghp_xxx   # optional, raises rate limit / needed for private repos
-   REPO_ROOT=/home/boss/Desktop/projects/glow and flow
+   REPO_ROOT=/home/rohith/Desktop/glowandflow
    ```
    Reload the service:
    ```bash
    sudo systemctl daemon-reload
    sudo systemctl restart glow-and-flow
    ```
-2. Allow the `boss` user to restart the service without a password (for the updater):
+2. Allow the `rohith` user to restart the service without a password (for the updater):
    ```bash
    sudo visudo -f /etc/sudoers.d/glow-and-flow
-   # add: boss ALL=(ALL) NOPASSWD: /bin/systemctl restart glow-and-flow, /bin/systemctl stop glow-and-flow, /bin/systemctl start glow-and-flow
+   # add: rohith ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart glow-and-flow, /usr/bin/systemctl stop glow-and-flow, /usr/bin/systemctl start glow-and-flow
    ```
 
 No GitHub-side configuration is required.
