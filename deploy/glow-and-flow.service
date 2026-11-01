@@ -14,7 +14,7 @@ Environment="JWT_SECRET=83f219a65bcf3f9f2ac6d16d74fea1de753352968c81878912ae9162
 Environment="GITHUB_REPO=rohith7575/glowandflow"
 Environment="PATH=/home/rohith/.nvm/versions/node/v22.23.4/bin:/usr/local/bin:/usr/bin:/bin"
 Environment="REPO_ROOT=/home/rohith/Desktop/glowandflow"
-Environment="APP_VERSION=0.1.1"
+Environment="APP_VERSION=0.1.2"
 EnvironmentFile=-/home/rohith/Desktop/glowandflow/data/runtime.env
 
 ExecStart=/home/rohith/.nvm/versions/node/v22.23.4/bin/node /home/rohith/Desktop/glowandflow/apps/web/.next/standalone/apps/web/server.js
