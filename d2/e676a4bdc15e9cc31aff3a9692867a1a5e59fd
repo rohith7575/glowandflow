@@ -1,0 +1,20 @@
+apps/web/app/api/auth/me/route.ts
+  h_bf19f0f446d5d8 2-3,5-12,20,24-57
+apps/web/app/api/profile/route.ts
+  h_bf19f0f446d5d8 1
+apps/web/app/dashboard/layout.tsx
+  h_bf19f0f446d5d8 10
+apps/web/app/dashboard/profile/page.tsx
+  h_bf19f0f446d5d8 1-100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d2e676a4bdc15e9cc31aff3a9692867a1a5e59fd",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
