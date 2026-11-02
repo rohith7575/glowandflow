@@ -1,0 +1,18 @@
+README.md
+  h_bf19f0f446d5d8 145-147
+deploy/glow-and-flow.service
+  h_bf19f0f446d5d8 22
+deploy/update.sh
+  h_bf19f0f446d5d8 73-75,134-140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5ead2e434e23b467a4687c0e41dfa7f0a985e442",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
