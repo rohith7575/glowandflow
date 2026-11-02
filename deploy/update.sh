@@ -142,7 +142,7 @@ fi
 # with the new build). No sudo needed: boss owns the node process.
 if [ "$FAIL" = "0" ]; then
   log "triggering service restart (killing node process)"
-  pkill -TERM -f "standalone/apps/web/server.js" || true
+  pkill -TERM -f "next-server" || true
   sleep 2
 fi
 
