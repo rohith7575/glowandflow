@@ -1,0 +1,20 @@
+apps/web/app/api/health/route.ts
+  h_bf19f0f446d5d8 3,12
+apps/web/app/api/update/status/route.ts
+  h_bf19f0f446d5d8 3,64
+apps/web/lib/version.ts
+  h_bf19f0f446d5d8 1-3,26-52
+deploy/update.sh
+  h_bf19f0f446d5d8 123,126-131
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "466f08b788a7f1c95b67626851f757473dd65a8d",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
