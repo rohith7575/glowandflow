@@ -1,0 +1,38 @@
+.env.production.example
+  h_bf19f0f446d5d8 4
+apps/web/.env.example
+  h_bf19f0f446d5d8 5
+apps/web/app/api/health/route.ts
+  h_bf19f0f446d5d8 11
+apps/web/app/api/update/status/route.ts
+  h_bf19f0f446d5d8 64
+apps/web/package.json
+  h_bf19f0f446d5d8 3
+deploy/glow-and-flow.service
+  h_bf19f0f446d5d8 17
+deploy/update.sh
+  h_bf19f0f446d5d8 131
+infra/docker-compose.prod.yml
+  h_bf19f0f446d5d8 12
+package.json
+  h_bf19f0f446d5d8 3
+packages/config/package.json
+  h_bf19f0f446d5d8 3
+packages/database/package.json
+  h_bf19f0f446d5d8 3
+packages/types/package.json
+  h_bf19f0f446d5d8 3
+packages/ui/package.json
+  h_bf19f0f446d5d8 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "023f0809415c82cc90aac120110fd90fe2612ee1",
+  "prompts": {},
+  "humans": {
+    "h_bf19f0f446d5d8": {
+      "author": "Kathir Eswaran <kathircp007@gmail.com>"
+    }
+  }
+}
